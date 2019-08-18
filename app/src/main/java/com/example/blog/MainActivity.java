@@ -6,8 +6,10 @@ import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.blog.data.DataHandler;
 import com.example.blog.models.Post;
@@ -41,12 +43,18 @@ public class MainActivity extends AppCompatActivity {
         }
 
         @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
+        public View getView(final int i, View view, ViewGroup viewGroup) {
             if (view == null) {
-                view = new TextView(MainActivity.this);
+                view = new Button(MainActivity.this);
             }
 
-            ((TextView) view).setText(Integer.toString(i));
+            ((Button) view).setText(Integer.toString(i));
+            ((Button) view).setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Toast.makeText(MainActivity.this, Integer.toString(i), Toast.LENGTH_SHORT).show();
+                }
+            });
             return view;
         }
     }
