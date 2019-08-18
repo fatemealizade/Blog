@@ -2,6 +2,7 @@ package com.example.blog;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
@@ -45,11 +46,19 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public View getView(final int i, View view, ViewGroup viewGroup) {
             if (view == null) {
-                view = new Button(MainActivity.this);
+                view = getLayoutInflater().inflate(R.layout.post_item, viewGroup, false);
             }
 
-            ((Button) view).setText(Integer.toString(i));
-            ((Button) view).setOnClickListener(new View.OnClickListener() {
+            ((TextView) view.findViewById(R.id.post_txt)).setText(Integer.toString(i));
+            Button btn = view.findViewById(R.id.post_btn);
+
+            btn.setText("Button " + Integer.toString(i + 1));
+            if (i % 2 == 0) {
+                btn.setBackgroundColor(Color.rgb(0, 100, 255));
+            } else {
+                btn.setBackgroundColor(Color.YELLOW);
+            }
+            btn.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     Toast.makeText(MainActivity.this, Integer.toString(i), Toast.LENGTH_SHORT).show();
