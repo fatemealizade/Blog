@@ -7,6 +7,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.example.blog.data.DataHandler;
 import com.example.blog.models.Post;
@@ -26,22 +27,27 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 0;
+            return 50;
         }
 
         @Override
         public Object getItem(int i) {
-            return null;
+            return i;
         }
 
         @Override
         public long getItemId(int i) {
-            return 0;
+            return i;
         }
 
         @Override
         public View getView(int i, View view, ViewGroup viewGroup) {
-            return null;
+            if (view == null) {
+                view = new TextView(MainActivity.this);
+            }
+
+            ((TextView) view).setText(Integer.toString(i));
+            return view;
         }
     }
 
