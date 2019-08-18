@@ -1,7 +1,5 @@
 package com.example.blog;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.graphics.Color;
 import android.os.Bundle;
 import android.view.View;
@@ -12,16 +10,22 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AppCompatActivity;
+
 import com.example.blog.data.DataHandler;
 import com.example.blog.models.Post;
 
 public class MainActivity extends AppCompatActivity {
+    private Post[] mPosts;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+
+        DataHandler dataHandler = new DataHandler();
+        mPosts = dataHandler.getAllPosts();
         ListView postsLst = findViewById(R.id.posts_lst);
         postsLst.setAdapter(new PostsAdapter());
     }
@@ -30,17 +34,17 @@ public class MainActivity extends AppCompatActivity {
 
         @Override
         public int getCount() {
-            return 50;
+            return mPosts.length;
         }
 
         @Override
-        public Object getItem(int i) {
-            return i;
+        public Post getItem(int i) {
+            return mPosts[i];
         }
 
         @Override
         public long getItemId(int i) {
-            return i;
+            return getItem(i).id;
         }
 
         @Override
@@ -49,7 +53,8 @@ public class MainActivity extends AppCompatActivity {
                 view = getLayoutInflater().inflate(R.layout.post_item, viewGroup, false);
             }
 
-            ((TextView) view.findViewById(R.id.post_txt)).setText(Integer.toString(i));
+            Post post = getItem(i);
+            ((TextView) view.findViewById(R.id.post_txt)).setText(post.title);
             Button btn = view.findViewById(R.id.post_btn);
 
             btn.setText("Button " + Integer.toString(i + 1));
